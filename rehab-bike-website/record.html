@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>復健紀錄</title>
+  <script>
+    function loadRecords() {
+      const records = JSON.parse(localStorage.getItem("records")) || [];
+      const list = document.getElementById("recordList");
+      if (records.length === 0) {
+        list.innerHTML = "<p>尚無紀錄</p>";
+        return;
+      }
+      list.innerHTML = "<ul>" + records.map(r =>
+        `<li>${r.date} - ${r.duration} 秒</li>`
+      ).join("") + "</ul>";
+    }
+  </script>
+</head>
+<body onload="loadRecords()">
+  <h2>復健紀錄</h2>
+  <div id="recordList"></div>
+  <button onclick="location.href='index.html'">回首頁</button>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>開始復健</title>
+  <script>
+    let startTime;
+
+    function startSession() {
+      startTime = new Date();
+      document.getElementById("status").textContent = "復健中...";
+    }
+
+    function endSession() {
+      if (!startTime) return alert("請先開始復健");
+      const endTime = new Date();
+      const duration = Math.round((endTime - startTime) / 1000);
+
+      const record = {
+        date: new Date().toLocaleString(),
+        duration: duration
+      };
+
+      const records = JSON.parse(localStorage.getItem("records")) || [];
+      records.push(record);
+      localStorage.setItem("records", JSON.stringify(records));
+
+      document.getElementById("status").textContent = "已結束，紀錄已儲存。";
+    }
+  </script>
+</head>
+<body>
+  <h2>開始復健</h2>
+  <p id="status">尚未開始</p>
+  <button onclick="startSession()">開始</button>
+  <button onclick="endSession()">結束</button>
+  <br><br>
+  <button onclick="location.href='index.html'">回首頁</button>
+</body>
+</html>
