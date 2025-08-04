@@ -9,7 +9,7 @@
       list.innerHTML = "<p>資料載入中...</p>";
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbyfsOpKAnGA74Yr1ogYWgWOorR4L8FPXQ3ZzQin9Br6qAdkrO4XhFQbs66FBaIIopI/exec");
+        const response = await fetch("https://script.google.com/macros/s/AKfycbyfsOpKAnGA74Yr1ogYWgWOorR4L8FPXQ3ZzQin9Br6qAdkrO4XhFQbs66FBaIIopI/exec?action=getData");
         const data = await response.json();
 
         if (!data || data.length === 0) {
@@ -36,3 +36,4 @@
   <button onclick="location.href='index.html'">回首頁</button>
 </body>
 </html>
+
