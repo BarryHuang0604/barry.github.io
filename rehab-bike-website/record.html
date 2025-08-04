@@ -4,16 +4,29 @@
   <meta charset="UTF-8">
   <title>復健紀錄</title>
   <script>
-    function loadRecords() {
-      const records = JSON.parse(localStorage.getItem("records")) || [];
+    async function loadRecords() {
       const list = document.getElementById("recordList");
-      if (records.length === 0) {
-        list.innerHTML = "<p>尚無紀錄</p>";
-        return;
+      list.innerHTML = "<p>資料載入中...</p>";
+
+      try {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbyfsOpKAnGA74Yr1ogYWgWOorR4L8FPXQ3ZzQin9Br6qAdkrO4XhFQbs66FBaIIopI/exec");
+        const data = await response.json();
+
+        if (!data || data.length === 0) {
+          list.innerHTML = "<p>尚無紀錄</p>";
+          return;
+        }
+
+        // 📝 根據 Google Sheet 欄位名稱顯示內容（請確保有這些欄位）
+        const items = data.map(r =>
+          `<li>${r.date || "（無日期）"} - ${r.duration || "0"} 秒</li>`
+        ).join("");
+        list.innerHTML = "<ul>" + items + "</ul>";
+
+      } catch (error) {
+        console.error("❌ 載入資料失敗：", error);
+        list.innerHTML = "<p style='color:red;'>⚠️ 無法載入資料，請稍後再試</p>";
       }
-      list.innerHTML = "<ul>" + records.map(r =>
-        `<li>${r.date} - ${r.duration} 秒</li>`
-      ).join("") + "</ul>";
     }
   </script>
 </head>
