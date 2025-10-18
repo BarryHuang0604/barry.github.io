@@ -1,51 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>智能復健手滑車</title>
-  <style>
-    body {
-      font-family: "Microsoft JhengHei", sans-serif;
-      background-color: #f4f6f8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    h1 {
-      color: #2c3e50;
-      font-size: 32px;
-    }
-
-    p {
-      font-size: 18px;
-      margin: 10px 0 30px;
-    }
-
-    button {
-      padding: 12px 24px;
-      margin: 10px;
-      font-size: 18px;
-      background-color: #3498db;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #2980b9;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>ESP32 即時資料</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
 </head>
 <body>
-  <h1>智能復健手滑車</h1>
-  <p>請選擇功能：</p>
-  <button onclick="location.href='start.html'">開始復健</button>
-  <button onclick="location.href='record.html'">復健紀錄</button>
+  <h1>即時感測值：</h1>
+  <h2 id="value">載入中...</h2>
+
+  <script>
+    const firebaseConfig = {
+      databaseURL: "https://esp32-data-test-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(app);
+
+    db.ref("data/value").on("value", (snapshot) => {
+      document.getElementById("value").innerText = snapshot.val();
+    });
+  </script>
 </body>
 </html>
