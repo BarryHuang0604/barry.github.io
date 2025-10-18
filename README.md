@@ -1,1 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ESP32 即時資料</title>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js"></script>
+</head>
+<body>
+  <h1>即時感測值：</h1>
+  <h2 id="value">載入中...</h2>
 
+  <script>
+    const firebaseConfig = {
+      databaseURL: "https://esp32-data-test-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(app);
+
+    db.ref("data/value").on("value", (snapshot) => {
+      document.getElementById("value").innerText = snapshot.val();
+    });
+  </script>
+</body>
+</html>
